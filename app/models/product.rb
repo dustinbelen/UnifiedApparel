@@ -11,7 +11,10 @@ class Product < ApplicationRecord
   has_many :sizes, through: :product_sizes
 
   has_many :order_products
-  has_many :orders, through: :product_orders
+  has_many :orders, through: :order_products
+
+  has_many :cart_products
+  has_many :carts, through: :cart_products
 
   validates :name, presence: true
   validates :stock, numericality: { only_integer: true, greater_than: 0 }
