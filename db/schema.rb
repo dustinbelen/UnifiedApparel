@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_12_190115) do
+ActiveRecord::Schema.define(version: 2020_11_12_191734) do
+
+  create_table "accounts", force: :cascade do |t|
+    t.string "username"
+    t.string "password"
+    t.integer "customer_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["customer_id"], name: "index_accounts_on_customer_id"
+  end
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -48,6 +57,18 @@ ActiveRecord::Schema.define(version: 2020_11_12_190115) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "customers", force: :cascade do |t|
+    t.string "name"
+    t.string "address"
+    t.string "postal_code"
+    t.integer "phone_number"
+    t.string "email_address"
+    t.integer "province_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["province_id"], name: "index_customers_on_province_id"
   end
 
   create_table "images", force: :cascade do |t|
@@ -113,6 +134,12 @@ ActiveRecord::Schema.define(version: 2020_11_12_190115) do
     t.index ["state_id"], name: "index_products_on_state_id"
   end
 
+  create_table "provinces", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "sizes", force: :cascade do |t|
     t.string "code"
     t.datetime "created_at", precision: 6, null: false
@@ -125,6 +152,8 @@ ActiveRecord::Schema.define(version: 2020_11_12_190115) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "accounts", "customers"
+  add_foreign_key "customers", "provinces"
   add_foreign_key "images", "products"
   add_foreign_key "order_products", "orders"
   add_foreign_key "order_products", "products"
