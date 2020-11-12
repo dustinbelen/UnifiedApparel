@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_12_192711) do
+ActiveRecord::Schema.define(version: 2020_11_12_194210) do
+
+  create_table "account_carts", force: :cascade do |t|
+    t.integer "account_id", null: false
+    t.integer "cart_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_account_carts_on_account_id"
+    t.index ["cart_id"], name: "index_account_carts_on_cart_id"
+  end
 
   create_table "accounts", force: :cascade do |t|
     t.string "username"
@@ -45,6 +54,26 @@ ActiveRecord::Schema.define(version: 2020_11_12_192711) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+  end
+
+  create_table "cart_products", force: :cascade do |t|
+    t.integer "quantity"
+    t.string "color"
+    t.string "size"
+    t.integer "cart_id", null: false
+    t.integer "product_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["cart_id"], name: "index_cart_products_on_cart_id"
+    t.index ["product_id"], name: "index_cart_products_on_product_id"
+  end
+
+  create_table "carts", force: :cascade do |t|
+    t.float "subtotal"
+    t.integer "account_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_carts_on_account_id"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -161,7 +190,12 @@ ActiveRecord::Schema.define(version: 2020_11_12_192711) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "account_carts", "accounts"
+  add_foreign_key "account_carts", "carts"
   add_foreign_key "accounts", "customers"
+  add_foreign_key "cart_products", "carts"
+  add_foreign_key "cart_products", "products"
+  add_foreign_key "carts", "accounts"
   add_foreign_key "customer_accounts", "accounts"
   add_foreign_key "customer_accounts", "customers"
   add_foreign_key "customers", "provinces"
