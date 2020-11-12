@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_12_184009) do
+ActiveRecord::Schema.define(version: 2020_11_12_190115) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -59,6 +59,30 @@ ActiveRecord::Schema.define(version: 2020_11_12_184009) do
     t.index ["product_id"], name: "index_images_on_product_id"
   end
 
+  create_table "order_products", force: :cascade do |t|
+    t.integer "quantity"
+    t.string "color"
+    t.string "size"
+    t.float "price_per_product"
+    t.integer "product_id", null: false
+    t.integer "order_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["order_id"], name: "index_order_products_on_order_id"
+    t.index ["product_id"], name: "index_order_products_on_product_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.integer "order_number"
+    t.datetime "order_date"
+    t.text "note"
+    t.float "total"
+    t.integer "customer_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["customer_id"], name: "index_orders_on_customer_id"
+  end
+
   create_table "product_colors", force: :cascade do |t|
     t.integer "color_id", null: false
     t.integer "product_id", null: false
@@ -102,6 +126,9 @@ ActiveRecord::Schema.define(version: 2020_11_12_184009) do
   end
 
   add_foreign_key "images", "products"
+  add_foreign_key "order_products", "orders"
+  add_foreign_key "order_products", "products"
+  add_foreign_key "orders", "customers"
   add_foreign_key "product_colors", "colors"
   add_foreign_key "product_colors", "products"
   add_foreign_key "product_sizes", "products"
