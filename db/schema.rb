@@ -165,7 +165,6 @@ ActiveRecord::Schema.define(version: 2020_11_12_220308) do
 
   create_table "product_images", force: :cascade do |t|
     t.string "image_filename"
-    t.binary "image", limit: 10485760
     t.integer "product_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

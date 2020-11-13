@@ -19,7 +19,7 @@ ActiveAdmin.register Product do
       product.colors.map { |c| c.name }.join(", ").html_safe
     end
     column :product_images do |product|
-      product.product_images.map { |i| i.image_filename }.join(", ").html_safe
+      product.product_images.map { |i| image_tag(i.image.variant(resize_to_limit: [100, 100])) }
     end
     actions
   end
@@ -35,7 +35,7 @@ ActiveAdmin.register Product do
         product.colors.map { |c| c.name }.join(", ").html_safe
       end
       row :product_images do |product|
-        product.product_images.map { |i| i.image_filename }.join(", ").html_safe
+        product.product_images.map { |i| image_tag(i.image.variant(resize_to_limit: [100, 100])) }
       end
     end
   end
@@ -53,7 +53,8 @@ ActiveAdmin.register Product do
         n_f.input :color
       end
       f.has_many :product_images, allow_destroy: true do |n_f|
-        n_f.input :product_image, as: :file
+        n_f.input :image_filename
+        n_f.input :image, as: :file
       end
     end
 
