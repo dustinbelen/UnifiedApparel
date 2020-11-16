@@ -4,7 +4,7 @@
       <div class="media">
         <div class="media-content">
           <p class="title is-4"><%= product.name %></p>
-          <p class="subtitle is-6"><%= product.category.name %></p>
+          <p class="subtitle is-6"><%= link_to product.category.name, product.category %></p>
         </div>
       </div>
       <div class="content">

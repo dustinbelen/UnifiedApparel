@@ -1,4 +1,10 @@
 <h1>Unified Apparel Home Page!</h1>
+<p>Shows all NEW products</p>
+<br>
 <div class="columns is-multiline">
-  <%= render partial: 'product', collection: @products %>
+<% @products.each do |product| %>
+  <% if product.state.name == "New" %>
+    <%= render partial: 'product', locals: { product: product }%>
+  <% end %>
+<% end %>
 </div>
