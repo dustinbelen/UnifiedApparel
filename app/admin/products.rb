@@ -1,9 +1,9 @@
 ActiveAdmin.register Product do
-  permit_params :name, :stock, :description, :category_id, :state_id, :product_image_ids, product_colors_attributes: %i[id product_id color_id _destroy]
+  permit_params :name, :stock, :description, :category_id, :state_id, :product_image_id, product_sizes_attributes: %i[id product_id size_id _destroy], product_colors_attributes: %i[id product_id color_id _destroy]
 
   controller do
     def scoped_collection
-      super.includes :product_colors, :colors, :state, :category, :product_images
+      super.includes :product_sizes, :sizes, :product_colors, :colors, :state, :category, :product_images
     end
   end
 
@@ -18,8 +18,13 @@ ActiveAdmin.register Product do
     column :colors do |product|
       product.colors.map { |c| c.name }.join(", ").html_safe
     end
+    column :sizes do |product|
+      product.sizes.map { |c| c.code }.join(", ").html_safe
+    end
     column :product_images do |product|
-      product.product_images.map { |i| image_tag(i.image.variant(resize_to_limit: [100, 100])) }
+      product.product_images.map do |i|
+        image_tag(i.image.variant(resize_to_limit: [100, 100])) if i.image.attached?
+      end
     end
     actions
   end
@@ -34,8 +39,13 @@ ActiveAdmin.register Product do
       row :colors do |product|
         product.colors.map { |c| c.name }.join(", ").html_safe
       end
+      row :sizes do |product|
+        product.sizes.map { |c| c.code }.join(", ").html_safe
+      end
       row :product_images do |product|
-        product.product_images.map { |i| image_tag(i.image.variant(resize_to_limit: [100, 100])) }
+        product.product_images.map do |i|
+          image_tag(i.image.variant(resize_to_limit: [100, 100])) if i.image.attached?
+        end
       end
     end
   end
@@ -52,9 +62,8 @@ ActiveAdmin.register Product do
       f.has_many :product_colors, allow_destroy: true do |n_f|
         n_f.input :color
       end
-      f.has_many :product_images, allow_destroy: true do |n_f|
-        n_f.input :image_filename
-        n_f.input :image, as: :file
+      f.has_many :product_sizes, allow_destroy: true do |n_f|
+        n_f.input :size, collection: Size.all.collect { |size| [size.code, size.id] }
       end
     end
 
