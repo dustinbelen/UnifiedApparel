@@ -29,7 +29,7 @@ ActiveAdmin.register Product do
     actions
   end
 
-  show do |product|
+  show do
     attributes_table do
       row :name
       row :stock
