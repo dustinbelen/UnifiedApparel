@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     collection do
       get "about"
       get "all_products"
+      get "show"
     end
   end
 

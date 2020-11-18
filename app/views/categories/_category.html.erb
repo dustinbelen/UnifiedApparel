@@ -5,6 +5,12 @@
         <div class="media-content">
           <p class="title is-4"><%= category.name %></p>
           <p class="title is-4"><%= category.products.count %></p>
+          <ul>
+            <% category.products.each do |product| %>
+              <li><%= link_to product.name, product %></li>
+            <% end %>
+          </ul>
+
         </div>
       </div>
     </div>

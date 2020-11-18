@@ -1,0 +1,21 @@
+<h1>Showing <%= @product.name %></h1>
+<%= link_to @product.category.name, @product.category %>
+<br><br>
+<p>Product Images</p>
+<% @product.product_images.each do |i| %>
+  <%= image_tag(i.image.variant(resize_to_limit: [300, 300])) if i.image.attached? %>
+<% end%>
+<br>
+<p>Colors Available</p>
+<ul>
+<% @product.product_colors.each do |pc| %>
+  <li><%= pc.color.name %></li>
+<% end%>
+</ul>
+<br>
+<p>Sizes Available</p>
+<ul>
+<% @product.product_sizes.each do |ps| %>
+  <li><%= ps.size.code %></li>
+<% end%>
+</ul>

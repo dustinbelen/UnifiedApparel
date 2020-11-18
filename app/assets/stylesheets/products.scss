@@ -31,8 +31,12 @@ div.tile.is-ancestor{
   opacity: 1.0;
 }
 
-p.title, p.tile-price {
+.title, p.tile-price {
   font-family: 'Roboto Bold Condensed';
+}
+
+.subtitle {
+  font-family: 'Roboto Condensed';
 }
 
 .product-tile p {
@@ -43,3 +47,6 @@ p.title, p.tile-price {
   transform: scale(1.2);
 }
 
+.is-divider {
+  padding: 5px;
+}
