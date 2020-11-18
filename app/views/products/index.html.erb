@@ -1,6 +1,15 @@
-<h1>Unified Apparel Home Page!</h1>
-<p>Shows all NEW products</p>
-<br>
+<section class="hero is-dark is-medium mb-5">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        This is Unified Apparel
+      </h1>
+      <h2 class="subtitle">
+        <%= link_to "Shop Now >", all_products_products_path %>
+      </h2>
+    </div>
+  </div>
+</section>
 <div class="columns is-multiline">
 <% @products.each do |product| %>
   <% if product.state.name == "New" %>
