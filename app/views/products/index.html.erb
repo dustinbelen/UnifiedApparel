@@ -14,7 +14,9 @@
 <div class="tile is-ancestor">
   <% @products.each do |product| %>
     <% if product.state.name == "New" %>
-      <%= render partial: 'product', locals: { product: product }%>
+      <div class="tile is-parent is-6">
+        <%= render partial: 'product', locals: { product: product }%>
+      </div>
     <% end %>
   <% end %>
 </div>
