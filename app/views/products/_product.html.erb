@@ -1,15 +1,6 @@
-<div class="column is-6">
-  <div class="card">
-    <div class="card-content">
-      <div class="media">
-        <div class="media-content">
-          <p class="title is-4"><%= product.name %></p>
-          <p class="subtitle is-6"><%= link_to product.category.name, product.category %></p>
-        </div>
-      </div>
-      <div class="content">
-        <p><%= product.description %></p>
-      </div>
-    </div>
+<div class="tile is-parent is-6">
+  <div class="tile is-child box">
+      <p class="title"><%= product.name %></p>
+      <p class="subtitle"><%= product.description %></p>
   </div>
 </div>
