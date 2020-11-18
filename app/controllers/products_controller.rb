@@ -1,6 +1,9 @@
 class ProductsController < ApplicationController
   def index
-    @products = Product.includes(:category, :state)
+    @np = [] # New products to show in the home page
+    Product.includes(:category, :state).each do |product|
+      @np << product if product.state.name == "New"
+    end
   end
 
   def all_products

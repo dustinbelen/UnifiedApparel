@@ -1,9 +1,14 @@
 <h1>All Products</h1>
 <br>
-<div class="tile is-ancestor">
-  <% @all_products.each do |product| %>
-    <div class="tile is-parent is-4">
-      <%= render partial: 'product', locals: { product: product }%>
-    </div>
-  <% end %>
-</div>
+<% if @all_products.empty? %>
+  <p>No products available right now</p>
+<% else %>
+  <div class="tile is-ancestor">
+    <% @all_products.each do |product| %>
+      <div class="tile is-parent is-4">
+        <%= render partial: 'product', locals: { product: product }%>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+

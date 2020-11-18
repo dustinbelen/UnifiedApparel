@@ -11,13 +11,17 @@
   </div>
 </section>
 
-<div class="tile is-ancestor">
-  <% @products.each do |product| %>
-    <% if product.state.name == "New" %>
-      <div class="tile is-parent is-6">
-        <%= render partial: 'product', locals: { product: product }%>
-      </div>
+<% if @np.empty? %>
+  <p>No New Products to show</p>
+<% else %>
+  <div class="tile is-ancestor">
+    <% @np.each do |product| %>
+        <div class="tile is-parent is-6">
+          <%= render partial: 'product', locals: { product: product }%>
+        </div>
     <% end %>
-  <% end %>
-</div>
+  </div>
+<% end %>
+
+
 
