@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_12_220308) do
+ActiveRecord::Schema.define(version: 2020_11_18_151146) do
 
   create_table "account_carts", force: :cascade do |t|
     t.integer "account_id", null: false
@@ -188,6 +188,7 @@ ActiveRecord::Schema.define(version: 2020_11_12_220308) do
     t.integer "state_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.float "price"
     t.index ["category_id"], name: "index_products_on_category_id"
     t.index ["state_id"], name: "index_products_on_state_id"
   end
