@@ -1,12 +1,6 @@
-<section class="hero is-dark is-medium mb-5">
+<section class="hero is-dark is-medium mb-5 header-image">
   <div class="hero-body">
     <div class="container">
-      <h1 class="title">
-        This is Unified Apparel
-      </h1>
-      <h2 class="subtitle">
-        <%= link_to "Shop Now >", all_products_products_path %>
-      </h2>
     </div>
   </div>
 </section>
@@ -16,7 +10,7 @@
 <% else %>
   <div class="tile is-ancestor">
     <% @np.each do |product| %>
-        <div class="tile is-parent is-6">
+        <div class="tile is-parent is-4">
           <%= render partial: 'product', locals: { product: product }%>
         </div>
     <% end %>
