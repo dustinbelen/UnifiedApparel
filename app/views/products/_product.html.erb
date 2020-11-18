@@ -1,3 +1,7 @@
 <div class="tile hero-body is-child box product-tile has-text-centered" style="background-image: url('<%= url_for(product.product_images.first.image)%>');">
-    <p class="title has-text-white py-6 is-size-4"><%= product.name %></p>
+  <div class="py-6">
+    <p class="title has-text-white is-size-4"><%= product.name %></p>
+    <p class="has-text-white tile-price"><%= number_to_currency(product.price) %></p>
+  </div>
+
 </div>
