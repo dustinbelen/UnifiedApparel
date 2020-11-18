@@ -14,12 +14,23 @@
  *= require_self
  */
 
-.main {
+ @font-face{
+  font-family: 'Roboto Condensed';
+  src: url(Roboto-Condensed.ttf);
+  font-family: 'Roboto Bold Condensed';
+  src: url(Roboto-BoldCondensed.ttf);
+ }
+
+body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
+  font-family: 'Roboto Condensed';
 }
 
+ul.menu-list{
+  font-family: 'Roboto Condensed';
+}
 .section {
   flex: 1;
 }
