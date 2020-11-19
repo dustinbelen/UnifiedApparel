@@ -1,7 +1,11 @@
-<h1>Categories</h1>
-<br>
-<ul>
-<% @categories.each do |category| %>
-  <li><%= link_to category.name, category %></li>
-<% end %>
-</ul>
+<div class="tile is-ancestor">
+  <% @categories.each do |category| %>
+    <div class="tile is-parent is-3">
+      <div class="tile hero-body is-child box has-text-centered">
+        <div class="py-6">
+          <%= link_to category.name + "s", category %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

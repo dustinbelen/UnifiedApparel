@@ -27,11 +27,14 @@
                 <li><%= link_to "View by Category", categories_path, class: "link"  %></li>
               </ul>
               <p class="menu-label">General</p>
-              <ul class="menu-list">
+              <ul class="menu-list pb-6">
                 <li><a>Sign In</a></li> <!-- Create an account in here too -->
                 <li><%= link_to "About", about_products_path, class: "link"  %></li>
                 <li><a>Contact Us</a></li>
               </ul>
+              <hr>
+              <small class="aside-footer-title">Unified Apparel</small><br>
+              <small class="aside-footer has-text-weight-light">Copywrong &#169; 2025</small>
             </aside>
           </div>
           <!-- The rest of the content-->
@@ -43,8 +46,6 @@
         </div>
       </div>
     </section>
-    <footer class="footer p-4">
-      <p class="content has-text-centered"><strong><%= link_to "Unified Apparel", root_path %></strong> - All Rights Reserved 2025</p>
-    </footer>
+
   </body>
 </html>

@@ -53,9 +53,14 @@ a.link, a.link:hover {
     margin-left: -10px;
 }
 
-ul.menu-list{
+ul.menu-list, .aside-footer {
   font-family: 'Roboto Condensed';
 }
+
+.aside-footer-title {
+  font-family: 'Roboto Bold Condensed';
+}
+
 .section {
   flex: 1;
 }
