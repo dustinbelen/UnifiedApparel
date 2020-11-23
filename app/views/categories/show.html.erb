@@ -1,1 +1,11 @@
-<%= render partial: 'category', locals: { category: @category } %>
+<% if @category.products.empty? %>
+  <p>No products available right now</p>
+<% else %>
+  <div class="tile is-ancestor">
+    <% @category.products.each do |product| %>
+      <div class="tile is-parent is-4">
+        <%= render partial: '/products/product', locals: { product: product }%>
+      </div>
+    <% end %>
+  </div>
+<% end %>
