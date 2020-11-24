@@ -35,18 +35,30 @@ div.tile.is-ancestor{
   font-family: 'Roboto Bold Condensed';
 }
 
-.subtitle {
+.subtitle, p.description {
   font-family: 'Roboto Condensed';
 }
 
-.product-tile p {
+.product-tile p, .product-image {
   transition: transform .2s; /* Animation */
 }
 
-.product-tile:hover p {
+.product-tile:hover p, .product-image:hover {
   transform: scale(1.2);
 }
 
 .is-divider {
   padding: 5px;
+}
+
+.product-hero {
+  background-color: #000;
+  border-radius: 25px;
+}
+
+h1.product-hero-title, h2.product-hero-subtitle a {
+  color: #FFF;
+}
+h2.product-hero-subtitle a:link {
+  text-decoration: none;
 }
