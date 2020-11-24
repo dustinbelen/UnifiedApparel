@@ -37,7 +37,7 @@
     <p class="title is-size-6 m-0 p-0">Sizes Available</p>
     <%= select("sizeSelect", "sizeSelect", @product.product_sizes.all.collect{|ps| [ps.size.code, ps.size.id]})%>
     <br><br>
-    <p class="title is-size-6 m-0 p-0">Quantity</p>
+    <p class="title is-size-6 m-0 p-0"></p>Quantity</p>
     <%= number_field_tag 'quantity', nil, min: 1, max: 10%>
     <br><br>
     <%= link_to image_tag("add_to_cart.png", size: "32"), root_path%>
