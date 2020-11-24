@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // Place all the styles related to the Products controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
@@ -61,4 +62,69 @@ h1.product-hero-title, h2.product-hero-subtitle a {
 }
 h2.product-hero-subtitle a:link {
   text-decoration: none;
+=======
+// Place all the styles related to the Products controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+@font-face {
+  font-family: 'Roboto Bold Condensed';
+  src: url(/assets/Roboto-BoldCondensed.ttf);
+ }
+
+div.tile.is-ancestor{
+  flex-wrap: wrap;
+}
+
+.header-image {
+  background-image: url("headerImage.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #999;
+}
+
+.product-tile {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 20rem;
+  opacity: 0.7;
+}
+
+.product-tile:hover {
+  opacity: 1.0;
+}
+
+.title, p.tile-price {
+  font-family: 'Roboto Bold Condensed';
+}
+
+.subtitle, p.description {
+  font-family: 'Roboto Condensed';
+}
+
+.product-tile p, .product-image {
+  transition: transform .2s; /* Animation */
+}
+
+.product-tile:hover p, .product-image:hover {
+  transform: scale(1.2);
+}
+
+.is-divider {
+  padding: 5px;
+}
+
+.product-hero {
+  background-color: #000;
+  border-radius: 25px;
+}
+
+h1.product-hero-title, h2.product-hero-subtitle a {
+  color: #FFF;
+}
+h2.product-hero-subtitle a:link {
+  text-decoration: none;
+>>>>>>> Redesign-Layout-for-products-and-categories
 }

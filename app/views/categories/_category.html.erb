@@ -1,6 +1,14 @@
+<<<<<<< HEAD
 <% @product = category.products.first %>
 <div class="tile hero-body is-child box product-tile has-text-centered" style="background-image: url('<%= url_for(@product.product_images.first.image)%>');">
   <div class="py-6">
     <p class="title has-text-white is-size-4"><%= link_to category.name + "s", category, class: "link" %></p>
   </div>
+=======
+<% @product = category.products.first %>
+<div class="tile hero-body is-child box product-tile has-text-centered" style="background-image: url('<%= url_for(@product.product_images.first.image)%>');">
+  <div class="py-6">
+    <p class="title has-text-white is-size-4"><%= link_to category.name + "s", category, class: "link" %></p>
+  </div>
+>>>>>>> Redesign-Layout-for-products-and-categories
 </div>
