@@ -8,6 +8,7 @@
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
 
   <body class="main">
@@ -17,31 +18,34 @@
           <!-- Nav bar -->
           <div class="column is-2">
             <figure class="image is-128x128">
-              <%= link_to image_tag("2018LOGO.png"), root_path %>
+              <%= link_to image_tag("2018LOGO.png"), root_path, class: "link" %>
             </figure>
             <aside class="menu">
               <p class="menu-label">Products</p>
               <ul class="menu-list">
-                <li><%= link_to "All Products", all_products_products_path %></li>
-                <li><%= link_to "View by Category", categories_path %></li>
+                <li><%= link_to "All Products", all_products_products_path, class: "link"  %></li>
+                <li><%= link_to "Browse Categories", categories_path, class: "link"  %></li>
               </ul>
               <p class="menu-label">General</p>
-              <ul class="menu-list">
-                <li><a>Sign Up</a></li>
-                <li><%= link_to "About", about_products_path %></li>
+              <ul class="menu-list pb-6">
+                <li><a>Sign In</a></li> <!-- Create an account in here too -->
+                <li><a>About</a></li>
                 <li><a>Contact Us</a></li>
               </ul>
+              <hr>
+              <small class="aside-footer-title">Unified Apparel</small><br>
+              <small class="aside-footer has-text-weight-light">Copywrong &#169; 2025</small>
             </aside>
           </div>
           <!-- The rest of the content-->
           <div class="column is-10">
+            <i class="fa" style="font-size:24px">&#xf07a;</i>
+            <span class='badge badge-warning' id='lblCartCount'> 5 </span>
             <%= yield %>
           </div>
         </div>
       </div>
     </section>
-    <footer class="footer p-4">
-      <p class="content has-text-centered"><strong><%= link_to "Unified Apparel", root_path %></strong> - All Rights Reserved 2025</p>
-    </footer>
+
   </body>
 </html>

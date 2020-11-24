@@ -1,19 +1,31 @@
-<section class="hero is-dark is-medium mb-5">
+<section class="hero is-dark is-medium header-image">
   <div class="hero-body">
-    <div class="container">
+    <div class="container has-text-centered">
       <h1 class="title">
-        This is Unified Apparel
+       Unified Apparel
       </h1>
       <h2 class="subtitle">
-        <%= link_to "Shop Now >", all_products_products_path %>
+        All as one.
       </h2>
     </div>
   </div>
 </section>
-<div class="columns is-multiline">
-<% @products.each do |product| %>
-  <% if product.state.name == "New" %>
-    <%= render partial: 'product', locals: { product: product }%>
-  <% end %>
+<% if @np.empty? %>
+  <div class="has-text-centered">
+    <h1 class="title is-size-3"><%= link_to "View All Products >", all_products_products_path %></h1>
+  </div>
+<% else %>
+  <div class="has-text-centered pt-5 pb-2">
+    <h1 class="title is-size-4">latest release</h1>
+  </div>
+  <div class="tile is-ancestor">
+    <% @np.each do |product| %>
+        <div class="tile is-parent is-4">
+          <%= render partial: 'product', locals: { product: product }%>
+        </div>
+    <% end %>
+  </div>
 <% end %>
-</div>
+
+
+

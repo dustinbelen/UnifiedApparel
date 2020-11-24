@@ -1,5 +1,5 @@
 ActiveAdmin.register Product do
-  permit_params :name, :stock, :description, :category_id, :state_id, :product_image_id, product_sizes_attributes: %i[id product_id size_id _destroy], product_colors_attributes: %i[id product_id color_id _destroy]
+  permit_params :name, :stock, :description, :price, :category_id, :state_id, :product_image_id, product_sizes_attributes: %i[id product_id size_id _destroy], product_colors_attributes: %i[id product_id color_id _destroy]
 
   controller do
     def scoped_collection
@@ -13,6 +13,7 @@ ActiveAdmin.register Product do
     column :name
     column :stock
     column :description
+    column :price
     column :category
     column :state
     column :colors do |product|
@@ -34,6 +35,7 @@ ActiveAdmin.register Product do
       row :name
       row :stock
       row :description
+      row :price
       row :category
       row :state
       row :colors do |product|
@@ -57,6 +59,7 @@ ActiveAdmin.register Product do
       f.input :name
       f.input :stock
       f.input :description
+      f.input :price
       f.input :category
       f.input :state
       f.has_many :product_colors, allow_destroy: true do |n_f|

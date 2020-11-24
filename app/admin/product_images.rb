@@ -3,6 +3,7 @@ ActiveAdmin.register ProductImage do
 
   index do
     selectable_column
+    column :id
     column :product
     column :image_filename
     column :image do |ad|
@@ -14,6 +15,7 @@ ActiveAdmin.register ProductImage do
 
   show do
     attributes_table do
+      row :id
       row :product
       row :image_filename
       row :image do |ad|
