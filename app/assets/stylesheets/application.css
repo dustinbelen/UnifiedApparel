@@ -64,3 +64,8 @@ ul.menu-list, .aside-footer {
 .section {
   flex: 1;
 }
+
+.top-nav {
+  margin-left: 73%;
+  margin-right: auto;
+}

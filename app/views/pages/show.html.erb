@@ -1,28 +1,19 @@
-
-<div class="mt-6">
-  <% if @page.title == "Sign In" %>
-  <p><%= @page.title %> or Sign Up here!</p>
+<% if @page.title == "About" %>
+  <h1 class="title"><%= @page.title %> Unified Apparel</h1>
+  <p class="description"><%= @page.description %></p>
+  <br>
+  <%= image_tag("Group_photo.jpg", size: 500, class: "group-photo")%>
   <!--
-      - Add Sign in and or sign up form here
-    -->
-  <% end %>
-  <% if @page.title == "About" %>
-    <h1 class="title"><%= @page.title %> Unified Apparel</h1>
-    <p class="description"><%= @page.description %></p>
-    <br>
-    <%= image_tag("Group_photo.jpg", size: 500, class: "group-photo")%>
-    <!--
-      - Add group photo here
-    -->
-  <% end %>
-  <% if @page.title == "Contact Us"%>
-    <h1 class="title"><%= @page.title %></h1>
-    <p class="description"><%= @page.description %></p>
-    <%= mail_to "dustinbelen@gmail.com", "204unifiedapparel@gmail.com", subject: "An email from UnifiedApparel.ca" %>
-    <div class="social-media mt-6">
-      <p class="description">Follow us:</p>
-      <%= link_to image_tag("facebook.png", size: 32), "https://www.facebook.com/204unifiedapparel", target: "_blank" %>
-      <%= link_to image_tag("instagram.png", size: 32), "https://www.instagram.com/unified.apparel", target: "_blank" %>
-    </div>
-  <% end %>
-</div>
+    - Add group photo here
+  -->
+<% end %>
+<% if @page.title == "Contact Us"%>
+  <h1 class="title"><%= @page.title %></h1>
+  <p class="description"><%= @page.description %></p>
+  <%= mail_to "dustinbelen@gmail.com", "204unifiedapparel@gmail.com", subject: "An email from UnifiedApparel.ca" %>
+  <div class="social-media mt-6">
+    <p class="description">Follow us:</p>
+    <%= link_to image_tag("facebook.png", size: 32), "https://www.facebook.com/204unifiedapparel", target: "_blank" %>
+    <%= link_to image_tag("instagram.png", size: 32), "https://www.instagram.com/unified.apparel", target: "_blank" %>
+  </div>
+<% end %>

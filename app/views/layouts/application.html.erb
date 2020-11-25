@@ -37,8 +37,14 @@
           </div>
           <!-- The rest of the content-->
           <div class="column is-10">
-            <i class="fa" style="font-size:24px">&#xf07a;</i>
-            <span class='badge badge-warning' id='lblCartCount'> 5 </span>
+            <div class="top-nav is-flex is-flex-direction-row is-align-items-center">
+              <%= render "categories/search_form" %>
+              <div class="shopping-cart">
+                <i class="fa" style="font-size:24px">&#xf07a;</i>
+                <span class='badge badge-warning' id='lblCartCount'> 5 </span>
+              </div>
+            </div>
+            <br>
             <%= yield %>
             <hr>
           </div>

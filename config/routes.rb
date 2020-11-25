@@ -24,5 +24,7 @@ Rails.application.routes.draw do
     end
   end
 
+  get "search", to: "categories#search", as: "search" # search_path
+
   root to: "products#index"
 end
