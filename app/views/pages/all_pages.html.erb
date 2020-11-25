@@ -1,0 +1,4 @@
+<% @pages = Page.all %>
+<% @pages.each do |p| %>
+  <li><%= link_to p.title, p %></li>
+<% end %>

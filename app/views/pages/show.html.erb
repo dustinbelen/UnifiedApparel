@@ -1,0 +1,20 @@
+<% if @page.title == "Sign In" %>
+ <p><%= @page.title %> or Sign Up here!</p>
+ <!--
+    - Add Sign in and or sign up form here
+  -->
+ <% end %>
+<% if @page.title == "About" %>
+  <h1><%= @page.title %> Unified Apparel</h1>
+  <p><%= @page.description %></p>
+  <!--
+    - Add group photo here
+  -->
+<% end %>
+<% if @page.title == "Contact Us"%>
+  <p><%= @page.description %></p>
+  <!--
+    - Add an email contact form here
+    - Add Social Media links here
+  -->
+<% end %>
