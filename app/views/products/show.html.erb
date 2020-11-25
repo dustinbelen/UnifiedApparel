@@ -1,21 +1,8 @@
-<section class="hero product-hero">
-  <div class="hero-body">
-    <div class="container">
-      <h1 class="title product-hero-title">
-        <%= @product.name %>
-      </h1>
-      <h2 class="subtitle product-hero-subtitle">
-        <%= link_to @product.category.name, @product.category %>
-      </h2>
-    </div>
-  </div>
-</section>
-<br>
 <%
   counter = 0
   i=0
 %>
-<div class="columns">
+<div class="columns mt-6">
   <div class="column is-4">
     <% @product.product_images.each do |i| %>
       <% if counter == 0 %>
@@ -30,6 +17,13 @@
     <% end %>
   </div>
   <div class="column">
+    <h1 class="title">
+      <%= @product.name %>
+    </h1>
+    <h2 class="subtitle">
+      <%= link_to @product.category.name, @product.category %>
+    </h2>
+    <hr>
     <p class="description mt-6 mb-6"><%=@product.description%></p>
     <p class="title is-size-6 m-0 p-0">Colors Available</p>
     <%= select("colorSelect", "colorSelect", @product.product_colors.all.collect{|pc| [pc.color.name, pc.color.id]})%>
@@ -37,7 +31,7 @@
     <p class="title is-size-6 m-0 p-0">Sizes Available</p>
     <%= select("sizeSelect", "sizeSelect", @product.product_sizes.all.collect{|ps| [ps.size.code, ps.size.id]})%>
     <br><br>
-    <p class="title is-size-6 m-0 p-0"></p>Quantity</p>
+    <p class="title is-size-6 m-0 p-0">Quantity</p>
     <%= number_field_tag 'quantity', nil, min: 1, max: 10%>
     <br><br>
     <%= link_to image_tag("add_to_cart.png", size: "32"), root_path%>

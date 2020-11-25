@@ -47,14 +47,9 @@ div.tile.is-ancestor{
   padding: 5px;
 }
 
-.product-hero {
-  background-color: #000;
-  border-radius: 25px;
+h1.product-hero-title, h2.subtitle a {
+  color: #000;
 }
-
-h1.product-hero-title, h2.product-hero-subtitle a {
-  color: #FFF;
-}
-h2.product-hero-subtitle a:link {
+h2.subtitle a:link {
   text-decoration: none;
 }

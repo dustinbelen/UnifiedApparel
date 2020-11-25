@@ -1,4 +1,4 @@
 <% @pages = Page.all %>
 <% @pages.each do |p| %>
-  <li><%= link_to p.title, p %></li>
+  <li><%= link_to p.title, p, class: "link"  %></li>
 <% end %>
