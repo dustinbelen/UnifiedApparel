@@ -1,4 +1,6 @@
+<% @categories = Category.all%>
 <%= form_with(url: search_path, local: true,  method: "get", class: 'search-category-form is-flex is-flex-direction-row is-align-items-center') do %>
-      <%= text_field_tag(:search_term, nil, class: 'search-category-text-field', placeholder: 'Search by Category') %>
-      <%= image_submit_tag("search.png", width: 45, class: 'search-category-image') %>
+      <%= text_field_tag(:search_product, nil, class: 'search-category-text-field', placeholder: 'Search Products') %>
+      <%= select_tag(:select_category, options_from_collection_for_select(@categories, "id", "name"), class: 'ml-1', prompt: "Category") %>
+      <%= image_submit_tag("search.png", width: 45, class: 'search-category-image mr-2') %>
 <% end %>

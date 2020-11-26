@@ -1,22 +1,19 @@
-<% number_of_products = 0 %>
-
-<% @searched_categories.each do |c|
-    c.products.each do |p|
-      number_of_products = number_of_products + 1
-    end
+<% number_of_products = 0
+ @searched_products.each do |p|
+    number_of_products = number_of_products + 1
   end %>
 
 <p class="result-text mb-4">
   Found <%= pluralize(number_of_products, 'product') %>
-  for the search term "<%= params[:search_term] %>"
+  when looking for "<%= params[:search_product] %>"
+  <% if params[:select_category] != ""%>
+   in the Category "<%= @category_selected.name %>"
+  <% end %>
 </p>
 <div class="tile is-ancestor">
-  <% @searched_categories.each do |c| %>
-    <% c.products.each do |p| %>
-      <div class="tile is-parent is-4">
-        <%= render partial: 'products/product', locals: {product: p} %>
-      </div>
-    <% end %>
+  <% @searched_products.each do |p| %>
+    <div class="tile is-parent is-4">
+      <%= render partial: 'products/product', locals: {product: p} %>
+    </div>
   <% end %>
 </div>
-
