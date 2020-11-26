@@ -1,0 +1,5 @@
+<% @states = State.all %>
+<%= form_with(url: filter_path, local: true,  method: "get", class: 'is-flex is-flex-direction-row is-align-items-center mb-2') do %>
+      <%= select_tag(:selected_state, options_from_collection_for_select(@states, "id", "name"), prompt: "Filter by State") %>
+      <%= image_submit_tag("filter.png", width: 45, class: 'mr-2') %>
+<% end %>

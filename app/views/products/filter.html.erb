@@ -1,13 +1,12 @@
-<% if @all_products.empty? %>
+<% if @filtered_products.empty? %>
   <p>No products available right now</p>
 <% else %>
 <%= render "filter" %>
   <div class="tile is-ancestor">
-    <% @all_products.each do |product| %>
+    <% @filtered_products.each do |product| %>
       <div class="tile is-parent is-4">
         <%= render partial: 'product', locals: { product: product }%>
       </div>
     <% end %>
   </div>
 <% end %>
-

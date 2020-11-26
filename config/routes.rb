@@ -25,6 +25,6 @@ Rails.application.routes.draw do
   end
 
   get "search", to: "categories#search", as: "search" # search_path
-
+  get "filter", to: "products#filter", as: "filter" # search_path
   root to: "products#index"
 end
