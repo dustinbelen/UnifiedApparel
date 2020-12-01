@@ -21,10 +21,16 @@ Rails.application.routes.draw do
     collection do
       get "all_products"
       get "show"
+      get "cart"
     end
   end
 
   get "search", to: "categories#search", as: "search" # search_path
   get "filter", to: "products#filter", as: "filter" # search_path
+
+  post "products/add_to_cart/:id", to: "products#add_to_cart", as: "add_to_cart"
+  delete "product/remove_from_cart/:id&:p_color_id&:p_size_id&:quantity", to: "products#remove_from_cart", as: "remove_from_cart"
+  post "product/update_from_cart/:id&:p_color_id&:p_size_id&:quantity", to: "products#update_from_cart", as: "update_from_cart"
+
   root to: "products#index"
 end

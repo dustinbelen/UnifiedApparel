@@ -1,0 +1,49 @@
+<% if session[:cart_with_options].empty? %>
+  <p>No items in cart.</p>
+<% else %>
+  <% session[:cart_with_options].each do |cart| %>
+    <%
+      product = Product.find(cart["id"])
+
+      all_product_colors = product.product_colors
+      all_product_sizes = product.product_sizes
+
+      pc = []
+      ps = []
+
+      @subtotal ||= 0
+      @subtotal += product.price * cart["quantity"].to_i
+
+      all_product_colors.each do |c|
+        pc << c.color
+      end
+
+      all_product_sizes.each do |s|
+        ps << s.size
+      end
+    %>
+    <div class="is-flex is-direction-flex-row p-3">
+      <%= image_tag (product.product_images.first.image.variant(resize_to_limit: [150, 225])) %>
+      <div class="is-flex-direction-column ml-4">
+        <%= form_with(url: update_from_cart_path(cart["id"], cart["p_color_id"], cart["p_size_id"], cart["quantity"]), local: true,  method: "post", class: 'form_class', id: "cart-form") do %>
+          <p class="title is-size-5 m-0 p-0 mb-2"><%= product.name %> - <%= number_to_currency(product.price) %></p>
+          <p class="description is-size-6 m-0 p-0">Color</p>
+          <%= select_tag(:new_color, options_from_collection_for_select(pc, "id", "name", cart["p_color_id"])) %>
+          <p class="description is-size-6 m-0 p-0">Size</p>
+          <%= select_tag(:new_size, options_from_collection_for_select(ps, "id", "code", cart["p_size_id"])) %>
+          <p class="description is-size-6 m-0 p-0">Quantity</p>
+          <%= number_field_tag :new_quantity, cart["quantity"], class: '.quantity-input', min: 1, max: 10 %>
+          <div class="cart-links mt-2">
+            <%= link_to 'Remove', remove_from_cart_path(cart["id"], cart["p_color_id"], cart["p_size_id"], cart["quantity"]), method: :delete, class: 'cart-link' %> |
+            <%= link_to 'Update', "#", :onclick => 'document.getElementById("cart-form").submit();', class: 'cart-link' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <hr>
+  <% end %>
+  <div class="subtotal">
+    <p class="title is-size-5 p-0 m-0">Subtotal: <%= number_to_currency(@subtotal) %></p>
+    <%= link_to 'Proceed to checkout', '#', class: 'cart-link' %>
+  </div>
+<% end %>

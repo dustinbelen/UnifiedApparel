@@ -27,11 +27,11 @@ div.tile.is-ancestor{
   opacity: 1.0;
 }
 
-.title, p.tile-price {
+.title, p.tile-price, p.title {
   font-family: 'Roboto Bold Condensed';
 }
 
-.subtitle, p.description {
+.subtitle, p.description, small.small-state {
   font-family: 'Roboto Condensed';
 }
 
@@ -50,6 +50,19 @@ div.tile.is-ancestor{
 h1.product-hero-title, h2.subtitle a {
   color: #000;
 }
+
 h2.subtitle a:link {
   text-decoration: none;
+}
+
+.filter-image{
+  width:30px;
+}
+
+input.quantity-input[type=number] {
+  width: 10%;
+}
+
+a.cart-link {
+  font-family: 'Roboto Condensed';
 }

@@ -39,10 +39,12 @@
           <div class="column is-10">
             <div class="top-nav is-flex is-flex-direction-row is-align-items-center">
               <%= render "categories/search_form" %>
+              <%= link_to cart_products_path, :class => 'cart-link' do %>
               <div class="shopping-cart">
                 <i class="fa" style="font-size:24px">&#xf07a;</i>
-                <span class='badge badge-warning' id='lblCartCount'> 5 </span>
+                <span class='badge badge-warning' id='lblCartCount'><%= session[:cart_with_options].count %></span>
               </div>
+              <% end %>
             </div>
             <br>
             <%= yield %>

@@ -6,11 +6,11 @@
   <div class="column is-4">
     <% @product.product_images.each do |i| %>
       <% if counter == 0 %>
-        <%= image_tag(i.image.variant(resize_to_limit: [600, 600]), class: "product-image", onclick: "refs.modalEdicion"+counter.to_s+".open()") if i.image.attached?  %>
+        <%= image_tag(i.image.variant(resize_to_limit: [600, 600]), class: "product-image", onclick: "refs.imageModal"+counter.to_s+".open()") if i.image.attached?  %>
         <%= render partial: 'product_image_modal', locals: { product_image: i, counter: counter }%>
         <br>
       <% else %>
-        <%= image_tag(i.image.variant(resize_to_limit: [100, 100]), class: "product-image", onclick: "refs.modalEdicion"+counter.to_s+".open()") if i.image.attached? %>
+        <%= image_tag(i.image.variant(resize_to_limit: [100, 100]), class: "product-image", onclick: "refs.imageModal"+counter.to_s+".open()") if i.image.attached? %>
         <%= render partial: 'product_image_modal', locals: { product_image: i, counter: counter }%>
       <% end %>
       <% counter = counter + 1%>
@@ -18,35 +18,57 @@
   </div>
   <div class="column">
     <h1 class="title">
-      <%= @product.name %>
+      <%= @product.name %> - <%= number_to_currency(@product.price) %>
     </h1>
     <h2 class="subtitle">
       <%= link_to @product.category.name, @product.category %>
     </h2>
+    <small class="small-state">(<%= @product.state.name %>)</small>
     <hr>
     <p class="description mt-6 mb-6"><%=@product.description%></p>
-    <p class="title is-size-6 m-0 p-0">Colors Available</p>
-    <%= select("colorSelect", "colorSelect", @product.product_colors.all.collect{|pc| [pc.color.name, pc.color.id]})%>
+    <%
+        @all_product_colors = @product.product_colors
+        @all_product_sizes = @product.product_sizes
+
+        @pc = []
+        @ps = []
+
+        @all_product_colors.each do |c|
+          @pc << c.color
+        end
+
+        @all_product_sizes.each do |s|
+          @ps << s.size
+        end
+      %>
+
+    <%= form_with(url: add_to_cart_path(@product.id), local: true,  method: "post") do %>
+      <p class="title is-size-6 m-0 p-0">Colors Available</p>
+      <%= select_tag(:color_selected, options_from_collection_for_select(@pc, "id", "name")) %>
+      <p class="title is-size-6 m-0 p-0 mt-3">Sizes Available</p>
+      <%= select_tag(:size_selected, options_from_collection_for_select(@ps, "id", "code")) %>
+      <p class="title is-size-6 m-0 p-0 mt-3">Quantity</p>
+      <%= number_field_tag :quantity, 1, class: 'quantity-input', min: 1, max: 10 %>
+      <br><br>
+      <% if @product.state.name == "Sold Out"%>
+        <p class="description">This item is sold out!</p>
+      <% else %>
+        <%= image_submit_tag("add_to_cart.png", width: 32) %>
+      <% end %>
+      <% if @find_a_dupe != nil %>
+        <p>This item already exists</p>
+      <% end %>
+    <% end %>
     <br><br>
-    <p class="title is-size-6 m-0 p-0">Sizes Available</p>
-    <%= select("sizeSelect", "sizeSelect", @product.product_sizes.all.collect{|ps| [ps.size.code, ps.size.id]})%>
-    <br><br>
-    <p class="title is-size-6 m-0 p-0">Quantity</p>
-    <%= number_field_tag 'quantity', nil, min: 1, max: 10%>
-    <br><br>
-    <%= link_to image_tag("add_to_cart.png", size: "32"), root_path%>
   </div>
 </div>
-
-
-
 
 <script>
   var refs = {
     <% counter.times do %>
-      modalEdicion<%= i.to_s %>: {
-        open: function() { document.getElementById('modalEdicion<%= i.to_s %>').classList.add('is-active');},
-        close:function() { document.getElementById('modalEdicion<%= i.to_s %>').classList.remove('is-active');}},
+      imageModal<%= i.to_s %>: {
+        open: function() { document.getElementById('imageModal<%= i.to_s %>').classList.add('is-active');},
+        close:function() { document.getElementById('imageModal<%= i.to_s %>').classList.remove('is-active');}},
         <% i = i + 1 %>
     <% end %>
   };
