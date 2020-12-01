@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :initialize_session
+  add_flash_types :info, :danger
 
   private
 

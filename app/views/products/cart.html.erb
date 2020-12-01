@@ -1,6 +1,11 @@
 <% if session[:cart_with_options].empty? %>
   <p>No items in cart.</p>
 <% else %>
+  <% flash.each do |type, msg| %>
+    <div class="notification is-<%= type %>">
+      <%= msg %>
+    </div>
+  <% end %>
   <% session[:cart_with_options].each do |cart| %>
     <%
       product = Product.find(cart["id"])
