@@ -40,14 +40,18 @@ class ProductsController < ApplicationController
     find_a_dupe = session[:cart_with_options].find { |h| h["id"] == id && h["p_color_id"] == p_color_id && h["p_size_id"] == p_size_id && h["quantity"] == quantity }
 
     if find_a_dupe.nil?
-      session[:cart_with_options] << {
-        id:         id,
-        p_color_id: p_color_id,
-        p_size_id:  p_size_id,
-        quantity:   quantity
-      }
+      if quantity > 0 && quantity < 11
+        session[:cart_with_options] << {
+          id:         id,
+          p_color_id: p_color_id,
+          p_size_id:  p_size_id,
+          quantity:   quantity
+        }
 
-      flash[:info] = "Added to cart!"
+        flash[:info] = "Added to cart!"
+      else
+        flash[:danger] = "The quantity can only be between 1 and 10"
+      end
     else
       flash[:danger] = "This is already in your cart!"
     end
@@ -85,15 +89,24 @@ class ProductsController < ApplicationController
     find_a_dupe = session[:cart_with_options].find { |h| h["id"] == id && h["p_color_id"] == new_color_id && h["p_size_id"] == new_size_id && h["quantity"] == new_quantity }
 
     if find_a_dupe.nil?
-      hash_product["p_color_id"] = new_color_id
-      hash_product["p_size_id"] = new_size_id
-      hash_product["quantity"] = new_quantity
+      if new_quantity > 0 && new_quantity < 11
+        hash_product["p_color_id"] = new_color_id
+        hash_product["p_size_id"] = new_size_id
+        hash_product["quantity"] = new_quantity
 
-      flash[:info] = "Updated #{new_quantity} - #{Product.find(id).name}, #{Color.find(new_color_id).name}, #{Size.find(new_size_id).code}!"
+        flash[:info] = "Updated #{new_quantity} - #{Product.find(id).name}, #{Color.find(new_color_id).name}, #{Size.find(new_size_id).code}!"
+      else
+        flash[:danger] = "The quantity can only be between 1 and 10"
+      end
     else
       flash[:danger] = "Cannot update #{new_quantity} - #{Product.find(id).name}, #{Color.find(new_color_id).name}, #{Size.find(new_size_id).code} - it may already exist!"
     end
 
     redirect_to request.referer
+  end
+
+  def checkout; end
+  def process_checkout
+
   end
 end

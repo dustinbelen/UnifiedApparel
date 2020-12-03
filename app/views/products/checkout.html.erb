@@ -1,0 +1,52 @@
+<p class="title is-size-4">Provide us with your information!</p>
+<p class="description">In your cart:</p>
+<ul class="mb-5">
+  <% subtotal = 0 %>
+  <% session[:cart_with_options].each do |cart_product| %>
+    <%
+      product = Product.find(cart_product["id"])
+      color = Color.find(cart_product["p_color_id"])
+      size = Size.find(cart_product["p_size_id"])
+
+      subtotal += product.price * cart_product["quantity"].to_i
+    %>
+    <li class="description">- <%= pluralize cart_product["quantity"].to_i, product.name %> - <%= color.name %>, <%= size.code %></li>
+  <% end %>
+</ul>
+
+<!--
+  - This will be the form to fill out when proceeding to checkout, this form needs
+    to query provinces properly
+
+  - This form should also maybe have - but this payment form should be separated from the customer information form
+    - Choose if visa or mastercard
+    - Credit card number entering
+    - expiry date
+    - enter security code
+
+  When submitted, the form should be processed with validation and should be added to the orders table.. might be tough
+
+-->
+<%= form_with(url: process_checkout_path, local: true,  method: "post", class: "mr-6") do %>
+  <div class="field is-horizontal is-flex is-flex-direction-row is-align-items-center">
+    <%= label_tag(:name, "Name:", class: "mr-1") %>
+    <%= text_field_tag :name, nil, class: "input-name" %>
+    <%= label_tag(:address, "Address:", class: "ml-4 mr-1") %>
+    <%= text_field_tag :address, nil, class: "input-address" %>
+  </div>
+  <div class="field is-horizontal is-flex is-flex-direction-row is-align-items-center is-flex-wrap-wrap">
+    <%= label_tag(:phone_number, "Phone Number:", class: "mr-1") %>
+    <%= number_field_tag :phone_number, nil, class: "input-phone" %>
+    <%= label_tag(:email, "Email:", class: "ml-4 mr-1") %>
+    <%= text_field_tag :email, nil, class: "input-email" %>
+  </div>
+  <div class="field is-horizontal is-flex is-flex-direction-row is-align-items-center is-flex-wrap-wrap">
+    <%= label_tag(:city, "City:", class: "mr-1") %>
+    <%= text_field_tag :city, nil, class: "input-city" %>
+    <%= label_tag(:province, "Province:", class: "ml-4 mr-1")%>
+    <%= text_field_tag :province, nil, class: "input-province" %>
+    <%= label_tag(:postal_code, "Postal Code:", class: "ml-4 mr-1") %>
+    <%= text_field_tag :postal_code, nil, class: "input-postal" %>
+    <p class="ml-4 mr-1">Country: Canada</p>
+  </div>
+<% end %>

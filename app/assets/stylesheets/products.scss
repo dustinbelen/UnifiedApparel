@@ -31,7 +31,7 @@ div.tile.is-ancestor{
   font-family: 'Roboto Bold Condensed';
 }
 
-.subtitle, p.description, small.small-state {
+.subtitle, p.description, small.small-state, li.description {
   font-family: 'Roboto Condensed';
 }
 
@@ -65,4 +65,24 @@ input.quantity-input[type=number] {
 
 a.cart-link {
   font-family: 'Roboto Condensed';
+}
+
+form input.input-name{
+  width: 45%;
+}
+
+form input.input-phone {
+  width: 25%;
+}
+
+form input.input-email {
+  width: 58%;
+}
+
+form input.input-province, form input.input-postal {
+  width: 15%;
+}
+
+form input.input-city{
+  width: 35%;
 }
