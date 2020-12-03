@@ -55,7 +55,6 @@ class ProductsController < ApplicationController
     else
       flash[:danger] = "This is already in your cart!"
     end
-
     redirect_to request.referer
   end
 
@@ -101,12 +100,37 @@ class ProductsController < ApplicationController
     else
       flash[:danger] = "Cannot update #{new_quantity} - #{Product.find(id).name}, #{Color.find(new_color_id).name}, #{Size.find(new_size_id).code} - it may already exist!"
     end
-
     redirect_to request.referer
   end
 
   def checkout; end
+
   def process_checkout
+    form_elements = []
+    passed_check = true
+    form_elements << params[:name]
+    form_elements << params[:address]
+    form_elements << params[:phone_number]
+    form_elements << params[:email]
+    form_elements << params[:city]
+    form_elements << params[:province]
+    form_elements << params[:postal_code]
+
+    # Do some validation checks, if any fails, request.referer back passing back all values, but then with a flash that tells the user the error
+    # if it all passes, add this order to the orders table and order_products table, then proceed to payment page
+    form_elements.each do |f|
+      if f == ""
+        flash[:danger] = "Do not leave any blank spots! Please fill this out again."
+        passed_check = false
+        break
+      end
+    end
+
+    if passed_check == true
+      render "payment"
+    else
+      redirect_to request.referer
+    end
 
   end
 end

@@ -1,6 +1,7 @@
 <p class="title is-size-4">Provide us with your information!</p>
-<p class="description">In your cart:</p>
-<ul class="mb-5">
+<hr>
+<p class="title is-size-6 p-0 m-0">In your cart:</p>
+<ul>
   <% subtotal = 0 %>
   <% session[:cart_with_options].each do |cart_product| %>
     <%
@@ -13,7 +14,9 @@
     <li class="description">- <%= pluralize cart_product["quantity"].to_i, product.name %> - <%= color.name %>, <%= size.code %></li>
   <% end %>
 </ul>
-
+<br>
+<p class="title is-size-6 p-0 m-0">Subtotal: <%= number_to_currency(subtotal) %></p>
+<hr>
 <!--
   - This will be the form to fill out when proceeding to checkout, this form needs
     to query provinces properly
@@ -27,26 +30,33 @@
   When submitted, the form should be processed with validation and should be added to the orders table.. might be tough
 
 -->
-<%= form_with(url: process_checkout_path, local: true,  method: "post", class: "mr-6") do %>
+<% flash.each do |type, msg| %>
+  <div class="notification is-<%= type %>">
+    <%= msg %>
+  </div>
+<% end %>
+<% provinces = Province.all %>
+<%= form_with(url: process_checkout_path, local: true,  method: "post", class: "mr-6 mt-5", id: "checkout-form") do %>
   <div class="field is-horizontal is-flex is-flex-direction-row is-align-items-center">
     <%= label_tag(:name, "Name:", class: "mr-1") %>
-    <%= text_field_tag :name, nil, class: "input-name" %>
+    <%= text_field_tag :name, nil, class: "input-name", minlength: 8, maxlength: 20 %>
     <%= label_tag(:address, "Address:", class: "ml-4 mr-1") %>
-    <%= text_field_tag :address, nil, class: "input-address" %>
+    <%= text_field_tag :address, nil, class: "input-address", minlength: 8, maxlength: 40 %>
   </div>
   <div class="field is-horizontal is-flex is-flex-direction-row is-align-items-center is-flex-wrap-wrap">
     <%= label_tag(:phone_number, "Phone Number:", class: "mr-1") %>
-    <%= number_field_tag :phone_number, nil, class: "input-phone" %>
+    <%= number_field_tag :phone_number, nil, class: "input-phone", min: 10, max: 11 %>
     <%= label_tag(:email, "Email:", class: "ml-4 mr-1") %>
-    <%= text_field_tag :email, nil, class: "input-email" %>
+    <%= text_field_tag :email, nil, class: "input-email", minlength: 5, maxlength: 40 %>
   </div>
-  <div class="field is-horizontal is-flex is-flex-direction-row is-align-items-center is-flex-wrap-wrap">
+  <div class="field is-horizontal is-flex is-flex-direction-row is-align-items-center is-flex-wrap-wrap mb-6">
     <%= label_tag(:city, "City:", class: "mr-1") %>
-    <%= text_field_tag :city, nil, class: "input-city" %>
+    <%= text_field_tag :city, nil, class: "input-city", minlength: 3, maxlength: 30 %>
     <%= label_tag(:province, "Province:", class: "ml-4 mr-1")%>
-    <%= text_field_tag :province, nil, class: "input-province" %>
+    <%= select_tag(:province, options_from_collection_for_select(provinces, "id", "name"), class: 'input-province', include_blank: true) %>
     <%= label_tag(:postal_code, "Postal Code:", class: "ml-4 mr-1") %>
-    <%= text_field_tag :postal_code, nil, class: "input-postal" %>
+    <%= text_field_tag :postal_code, nil, class: "input-postal", minlength: 6, maxlength: 7 %>
     <p class="ml-4 mr-1">Country: Canada</p>
   </div>
+  <%= link_to 'Proceed to Payment >', "#", :onclick => "document.getElementById('checkout-form').submit();", class: 'cart-link' %>
 <% end %>

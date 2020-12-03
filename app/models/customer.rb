@@ -2,6 +2,7 @@ class Customer < ApplicationRecord
   belongs_to :province
   has_many :orders
 
+  # implementation pending: not yet sure if this will be done or not
   has_one :customer_account
   has_one :account, through: :customer_account
 
