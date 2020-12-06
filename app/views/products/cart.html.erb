@@ -1,5 +1,5 @@
 <% if session[:cart_with_options].empty? %>
-  <p>No items in cart.</p>
+  <p class="description">There are no items in your cart.</p>
 <% else %>
   <% flash.each do |type, msg| %>
     <div class="notification is-<%= type %>">

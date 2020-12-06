@@ -169,6 +169,7 @@ class ProductsController < ApplicationController
 
   def process_payment
     # This will add the order to the orders table and customer to the customer table
+    # TODO: ADD PAYMENT VALIDATIONS
     order_num = Faker::Number.unique.number(digits: 5)
 
     customer = Customer.find_or_create_by(name:          session[:cust_name].upcase,

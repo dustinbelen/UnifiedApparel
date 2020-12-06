@@ -16,9 +16,9 @@ ActiveAdmin.register Customer do
     column :phone_number
     column :email_address
     column :province_id
-    column :orders do |order|
-      order.orders.map do |i|
-        i.order_number
+    column :orders do |c|
+      c.orders.map do |i|
+        link_to i.order_number, admin_order_path(i)
       end
     end
     actions

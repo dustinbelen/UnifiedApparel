@@ -13,7 +13,9 @@ ActiveAdmin.register Product do
     column :name
     column :stock
     column :description
-    column :price
+    column :price do |p|
+      number_to_currency(p.price)
+    end
     column :category
     column :state
     column :colors do |product|

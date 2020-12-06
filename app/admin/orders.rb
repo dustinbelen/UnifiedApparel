@@ -13,8 +13,15 @@ ActiveAdmin.register Order do
     column :order_number
     column :order_date
     column :note
-    column :total
+    column :total do |o|
+      number_to_currency(o.total)
+    end
     column :customer
+    column "Order Details", :order_products do |o|
+      o.order_products.map do |i|
+        link_to "ORDER: " + i.product.name, admin_order_product_path(i)
+      end
+    end
     column :products do |order|
       order.products.map { |p| p.name }.join(", ").html_safe
     end
