@@ -1,0 +1,25 @@
+<% provinces = Province.all %>
+<%= form_with(url: process_customer_info_path, local: true,  method: "post", class: "mr-6 mt-5", id: "checkout-form") do %>
+  <div class="field is-horizontal is-flex is-flex-direction-row is-align-items-center">
+    <%= label_tag(:name, "Name:", class: "description mr-1") %>
+    <%= text_field_tag :name, nil, class: "input-name", minlength: 8, maxlength: 20 %>
+    <%= label_tag(:address, "Address:", class: "description ml-4 mr-1") %>
+    <%= text_field_tag :address, nil, class: "input-address", minlength: 8, maxlength: 40 %>
+  </div>
+  <div class="field is-horizontal is-flex is-flex-direction-row is-align-items-center is-flex-wrap-wrap">
+    <%= label_tag(:phone_number, "Phone Number:", class: "description mr-1") %>
+    <%= number_field_tag :phone_number, nil, class: "input-phone", min: 10, max: 11 %>
+    <%= label_tag(:email, "Email:", class: "description ml-4 mr-1") %>
+    <%= text_field_tag :email, nil, class: "input-email", minlength: 5, maxlength: 40 %>
+  </div>
+  <div class="field is-horizontal is-flex is-flex-direction-row is-align-items-center is-flex-wrap-wrap mb-6">
+    <%= label_tag(:city, "City:", class: "description mr-1") %>
+    <%= text_field_tag :city, nil, class: "input-city", minlength: 3, maxlength: 30 %>
+    <%= label_tag(:province, "Province:", class: "description ml-4 mr-1")%>
+    <%= select_tag(:province, options_from_collection_for_select(provinces, "id", "name"), class: 'input-province', include_blank: true) %>
+    <%= label_tag(:postal_code, "Postal Code:", class: "description ml-4 mr-1") %>
+    <%= text_field_tag :postal_code, nil, class: "input-postal", minlength: 6, maxlength: 7 %>
+    <p class="description ml-4 mr-1">Country: Canada</p>
+  </div>
+  <%= link_to 'Proceed to Payment >', "#", :onclick => "document.getElementById('checkout-form').submit();", class: 'cart-link' %>
+<% end %>

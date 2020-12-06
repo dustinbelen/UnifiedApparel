@@ -23,6 +23,7 @@ Rails.application.routes.draw do
       get "show"
       get "cart"
       get "checkout"
+      get "payment"
     end
   end
 
@@ -32,8 +33,8 @@ Rails.application.routes.draw do
   post "products/add_to_cart/:id", to: "products#add_to_cart", as: "add_to_cart"
   delete "product/remove_from_cart/:id&:p_color_id&:p_size_id&:quantity", to: "products#remove_from_cart", as: "remove_from_cart"
   post "product/update_from_cart/:id&:p_color_id&:p_size_id&:quantity", to: "products#update_from_cart", as: "update_from_cart"
-  post "product/process_checkout", to: "products#process_checkout", as: "process_checkout"
-
+  post "product/process_customer_info", to: "products#process_customer_info", as: "process_customer_info"
+  post "product/process_payment", to: "products#process_payment", as: "process_payment"
 
   root to: "products#index"
 end

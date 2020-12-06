@@ -105,9 +105,9 @@ class ProductsController < ApplicationController
 
   def checkout; end
 
-  def process_checkout
+  def process_customer_info
+    passed_customer_form_validation_checks = true
     form_elements = []
-    passed_check = true
     form_elements << params[:name]
     form_elements << params[:address]
     form_elements << params[:phone_number]
@@ -116,21 +116,81 @@ class ProductsController < ApplicationController
     form_elements << params[:province]
     form_elements << params[:postal_code]
 
-    # Do some validation checks, if any fails, request.referer back passing back all values, but then with a flash that tells the user the error
-    # if it all passes, add this order to the orders table and order_products table, then proceed to payment page
     form_elements.each do |f|
-      if f == ""
-        flash[:danger] = "Do not leave any blank spots! Please fill this out again."
-        passed_check = false
-        break
-      end
+      next unless f == ""
+
+      flash[:danger] = "Do not leave any blank spots! Please fill this out again."
+      passed_customer_form_validation_checks = false
+      break
     end
 
-    if passed_check == true
-      render "payment"
+    if passed_customer_form_validation_checks == true
+      session[:cust_name] = params[:name]
+      session[:cust_address] = params[:address]
+      session[:cust_phone_number] = params[:phone_number]
+      session[:cust_email] = params[:email]
+      session[:cust_city] = params[:city]
+      session[:cust_province] = params[:province]
+      session[:cust_postal_code] = params[:postal_code]
+
+      redirect_to payment_products_path
     else
       redirect_to request.referer
     end
+  end
 
+  def payment
+    # Calculate Tax Rate
+    @subtotal = 0
+    session[:cart_with_options].each do |cart|
+      product = Product.find(cart["id"])
+      @subtotal += product.price * cart["quantity"]
+    end
+
+    tax_rates = []
+    total_tax_rate = 0
+    @total = 0
+    @province = Province.find(session[:cust_province].to_i)
+    tax_rates << @province.pst if @province.pst != 0
+    tax_rates << @province.gst if @province.gst != 0
+    tax_rates << @province.hst if @province.hst != 0
+    tax_rates << @province.qst if @province.qst != 0
+
+    tax_rates.each do |t|
+      total_tax_rate += t
+    end
+
+    total_tax_rate = total_tax_rate / 100 + 1
+    @total = @subtotal * total_tax_rate
+    session[:total] = @total
+
+    # form will submit to process payment
+  end
+
+  def process_payment
+    # This will add the order to the orders table and customer to the customer table
+    order_num = Faker::Number.unique.number(digits: 5)
+
+    customer = Customer.find_or_create_by(name:          session[:cust_name].upcase,
+                                          address:       session[:cust_address].upcase,
+                                          postal_code:   session[:cust_postal_code].upcase,
+                                          phone_number:  session[:cust_phone_number].to_i,
+                                          email_address: session[:cust_email].upcase,
+                                          city:          session[:cust_city].upcase,
+                                          province:      Province.find(session[:cust_province].to_i))
+    order = Order.create(order_number: order_num, order_date: DateTime.now, note: nil, total: session[:total], customer: customer)
+    session[:cart_with_options].each do |cart_product|
+      product = Product.find(cart_product["id"])
+      OrderProduct.create(quantity:          cart_product["quantity"].to_i,
+                          color:             Color.find(cart_product["p_color_id"]).name,
+                          size:              Size.find(cart_product["p_size_id"]).code,
+                          price_per_product: product.price,
+                          product:           product,
+                          order:             order)
+    end
+
+    flash[:info] = "Thanks for your order!"
+    session[:cart_with_options] = []
+    redirect_to root_path
   end
 end

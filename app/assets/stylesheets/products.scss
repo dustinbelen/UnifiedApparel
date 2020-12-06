@@ -31,7 +31,7 @@ div.tile.is-ancestor{
   font-family: 'Roboto Bold Condensed';
 }
 
-.subtitle, p.description, small.small-state, li.description {
+.subtitle, p.description, small.small-state, li.description, label.description {
   font-family: 'Roboto Condensed';
 }
 
@@ -85,4 +85,12 @@ form input.input-province, form input.input-postal {
 
 form input.input-city{
   width: 27%;
+}
+
+form input.input-card-number {
+  width: 30%
+}
+
+form input.input-security-code, form input.input-expiry {
+  width: 10%
 }

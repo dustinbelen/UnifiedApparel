@@ -1,1 +1,39 @@
-<p>This is for the payment!</p>
+<p class="title is-size-4">Enter your payment information!</p>
+<%= render partial: "cart_preview" %>
+<p class="title p-0 m-0 is-size-6">Order Total</p>
+<br>
+<p class="description">Subtotal: <%= number_to_currency(@subtotal) %></p>
+<% if @province.pst != 0 %>
+  <p class="description">PST: <%= number_to_percentage(@province.pst) %></p>
+<% end %>
+<% if @province.gst != 0 %>
+  <p class="description">GST: <%= number_to_percentage(@province.gst) %></p>
+<% end %>
+<% if @province.hst != 0 %>
+  <p class="description">HST: <%= number_to_percentage(@province.hst) %></p>
+<% end %>
+<% if @province.qst != 0 %>
+  <p class="description">QST: <%= number_to_percentage(@province.qst) %></p>
+<% end %>
+<br>
+<p class="title p-0 m-0 is-size-6">Your total is: <%= number_to_currency(@total) %></p>
+<hr>
+<%= form_with(url: process_payment_path, local: true,  method: "post", id: "payment-form") do %>
+  <div class="field is-horizontal is-flex is-flex-direction-row is-align-items-center">
+    <p class="description mr-3">Choose a Card Type: </p>
+    <%= radio_button_tag(:card_type, "visa") %>
+    <%= label_tag(:card_type_visa, "Visa", class: "description ml-1 mr-3") %>
+    <%= radio_button_tag(:card_type, "mastercard") %>
+    <%= label_tag(:card_type_mastercard, "Mastercard", class: "description ml-1") %>
+  </div>
+  <div class="field is-horizontal is-flex is-flex-direction-row is-align-items-center is-flex-wrap-wrap mb-6">
+    <%= label_tag(:card_number, "Card Number:", class: "description mr-1") %>
+    <%= number_field_tag :card_number, nil, class: "input-card-number", minlength: 16, maxlength: 16 %>
+    <%= label_tag(:security_code, "Security Code:", class: "description ml-4 mr-1")%>
+    <%= number_field_tag :security_code, nil, class: "input-security-code", minlength: 3, maxlength: 3 %>
+    <%= label_tag(:expiry, "Expiry:", class: "description ml-4 mr-1") %>
+    <%= number_field_tag :expiry, nil, class: "input-expiry", minlength: 4, maxlength: 4 %>
+  </div>
+  <%= link_to 'Complete My Order >', "#", :onclick => "document.getElementById('payment-form').submit();", class: 'cart-link' %>
+<% end %>
+

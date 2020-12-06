@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_03_005631) do
+ActiveRecord::Schema.define(version: 2020_12_06_201017) do
 
   create_table "account_carts", force: :cascade do |t|
     t.integer "account_id", null: false
@@ -127,6 +127,7 @@ ActiveRecord::Schema.define(version: 2020_12_03_005631) do
     t.integer "province_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "city"
     t.index ["province_id"], name: "index_customers_on_province_id"
   end
 
