@@ -29,6 +29,11 @@
               <p class="menu-label">General</p>
               <ul class="menu-list pb-6">
                 <%= render template: "pages/all_pages" %>
+                <% if user_signed_in? %>
+                  <li><%= link_to "Sign out", destroy_user_session_path, method: :delete, class: "link" %></li>
+                <% else %>
+                  <li><%= link_to "Sign in", user_session_path, class: "link" %></li>
+                <% end %>
               </ul>
               <hr>
               <small class="aside-footer-title">Unified Apparel</small><br>
