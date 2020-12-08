@@ -1,9 +1,25 @@
 Rails.application.routes.draw do
   devise_for :users
-  resources :users
+  resources :users do
+    collection do
+      get "index"
+    end
+  end
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html\
+
+  resources :customers do
+    collection do
+      get "create"
+    end
+  end
+
+  resources :orders do
+    collection do
+      get "all_orders"
+    end
+  end
 
   resources :pages do
     collection do
@@ -37,6 +53,7 @@ Rails.application.routes.draw do
   post "product/update_from_cart/:id&:p_color_id&:p_size_id&:quantity", to: "products#update_from_cart", as: "update_from_cart"
   post "product/process_customer_info", to: "products#process_customer_info", as: "process_customer_info"
   post "product/process_payment", to: "products#process_payment", as: "process_payment"
+  post "customers/process_account_information", to: "customers#process_account_information", as: "process_account_information"
 
   root to: "products#index"
 end

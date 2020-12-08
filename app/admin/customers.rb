@@ -33,6 +33,11 @@ ActiveAdmin.register Customer do
       row :phone_number
       row :email_address
       row :province_id
+      row :orders do |c|
+        c.orders.map do |i|
+          link_to i.order_number, admin_order_path(i)
+        end
+      end
     end
   end
 

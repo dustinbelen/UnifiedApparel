@@ -1,0 +1,35 @@
+<% flash.each do |type, msg| %>
+  <div class="notification is-<%= type %>">
+    <%= msg %>
+  </div>
+<% end %>
+<h1>Shipping Address Information</h1>
+<%
+  provinceToPost = nil
+  provinces = Province.all
+  if !session[:cust_province].nil?
+    provinceToPost = session[:cust_province].id
+  end
+%>
+<%= form_with(url: process_account_information_path, local: true,  method: "post", class: "mr-6 mt-5", id: "save-form") do %>
+  <div class="field is-horizontal is-flex is-flex-direction-row is-align-items-center">
+    <%= label_tag(:name, "Name:", class: "description mr-1") %>
+    <%= text_field_tag :name, session[:cust_name], class: "input-name", minlength: 8, maxlength: 20 %>
+    <%= label_tag(:address, "Address:", class: "description ml-4 mr-1") %>
+    <%= text_field_tag :address, session[:cust_address], class: "input-address", minlength: 8, maxlength: 40 %>
+  </div>
+  <div class="field is-horizontal is-flex is-flex-direction-row is-align-items-center is-flex-wrap-wrap">
+    <%= label_tag(:phone_number, "Phone Number:", class: "description mr-1") %>
+    <%= number_field_tag :phone_number, session[:cust_phone_number], class: "input-phone", min: 10, max: 11 %>
+  </div>
+  <div class="field is-horizontal is-flex is-flex-direction-row is-align-items-center is-flex-wrap-wrap mb-6">
+    <%= label_tag(:city, "City:", class: "description mr-1") %>
+    <%= text_field_tag :city, session[:cust_city], class: "input-city", minlength: 3, maxlength: 30 %>
+    <%= label_tag(:province, "Province:", class: "description ml-4 mr-1")%>
+    <%= select_tag(:province, options_from_collection_for_select(provinces, "id", "name", provinceToPost), class: 'input-province', include_blank: true) %>
+    <%= label_tag(:postal_code, "Postal Code:", class: "description ml-4 mr-1") %>
+    <%= text_field_tag :postal_code, session[:cust_postal_code], class: "input-postal", minlength: 6, maxlength: 7 %>
+    <p class="description ml-4 mr-1">Country: Canada</p>
+  </div>
+  <%= link_to 'Save Information >', "#", :onclick => "document.getElementById('save-form').submit();", class: 'cart-link' %>
+<% end %>

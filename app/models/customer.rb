@@ -1,7 +1,7 @@
 class Customer < ApplicationRecord
   belongs_to :province
 
-  has_many :orders, dependent: :delete_all
+  has_many :orders, dependent: :destroy
   accepts_nested_attributes_for :orders, allow_destroy: true
 
   # implementation pending: not yet sure if this will be done or not
