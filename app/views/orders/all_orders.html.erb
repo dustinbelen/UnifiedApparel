@@ -1,0 +1,12 @@
+<h1 class="title is-size-4">Order History</h1>
+<hr>
+<% @orders.reverse.each do |o| %>
+<details>
+  <summary class="title is-size-6">Order Number <%= o.order_number %> - Order Placed: <%= o.order_date.strftime("%B %d, %Y") %></summary>
+  <ul>
+    <li class="description">Total: <%= number_to_currency(o.total) %></li>
+    <li class="description">Products: <%= o.products.map { |p| p.name }.join(", ").html_safe %></li>
+  </ul>
+</details>
+<br>
+<% end %>

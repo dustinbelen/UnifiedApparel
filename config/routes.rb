@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   resources :orders do
     collection do
       get "all_orders"
+      get "show"
     end
   end
 

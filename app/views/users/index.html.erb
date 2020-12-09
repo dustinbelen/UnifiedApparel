@@ -1,5 +1,6 @@
-<h1>My Account</h1>
+<h1 class="title is-size-4">My Account</h1>
+<hr>
 <ul>
-  <li><%= link_to "Account Information", customers_path %></li>
-  <li><%= link_to "Order History", all_orders_orders_path %></li>
+  <li><%= link_to "Account Information", customers_path, class: "account-pages-link"%></li>
+  <li><%= link_to "Order History", all_orders_orders_path, class: "account-pages-link"%></li>
 </ul>

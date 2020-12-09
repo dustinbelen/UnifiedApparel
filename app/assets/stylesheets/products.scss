@@ -27,11 +27,11 @@ div.tile.is-ancestor{
   opacity: 1.0;
 }
 
-.title, p.tile-price, p.title {
+.title, p.tile-price, p.title, summary.title {
   font-family: 'Roboto Bold Condensed';
 }
 
-.subtitle, p.description, small.small-state, li.description, label.description {
+.subtitle, p.description, small.small-state, li.description, label.description, summary.description {
   font-family: 'Roboto Condensed';
 }
 

@@ -29,7 +29,15 @@ class ProductsController < ApplicationController
     end
   end
 
-  def cart; end
+  def cart
+    session[:c_name] = nil
+    session[:c_address] = nil
+    session[:c_phone_number] = nil
+    session[:c_city] = nil
+    session[:c_email] = nil
+    session[:c_province] = nil
+    session[:c_postal_code] = nil
+  end
 
   def add_to_cart
     id = params[:id].to_i
@@ -37,7 +45,7 @@ class ProductsController < ApplicationController
     p_size_id = params[:size_selected].to_i
     quantity = params[:quantity].to_i
 
-    find_a_dupe = session[:cart_with_options].find { |h| h["id"] == id && h["p_color_id"] == p_color_id && h["p_size_id"] == p_size_id && h["quantity"] == quantity }
+    find_a_dupe = session[:cart_with_options].find { |h| h["id"] == id && h["p_color_id"] == p_color_id && h["p_size_id"] == p_size_id }
 
     if find_a_dupe.nil?
       if quantity > 0 && quantity < 11
@@ -53,7 +61,7 @@ class ProductsController < ApplicationController
         flash[:danger] = "The quantity can only be between 1 and 10"
       end
     else
-      flash[:danger] = "This is already in your cart!"
+      find_a_dupe["quantity"] += quantity
     end
     redirect_to request.referer
   end
@@ -103,7 +111,20 @@ class ProductsController < ApplicationController
     redirect_to request.referer
   end
 
-  def checkout; end
+  def checkout
+    if user_signed_in?
+      customer = Customer.find { |i| i.email_address == current_user.email.upcase }
+      unless customer.nil?
+        session[:c_name] = customer.name
+        session[:c_address] = customer.address
+        session[:c_phone_number] = customer.phone_number
+        session[:c_city] = customer.city
+        session[:c_email] = current_user.email
+        session[:c_province] = customer.province
+        session[:c_postal_code] = customer.postal_code
+      end
+    end
+  end
 
   def process_customer_info
     passed_customer_form_validation_checks = true
@@ -125,13 +146,13 @@ class ProductsController < ApplicationController
     end
 
     if passed_customer_form_validation_checks == true
-      session[:cust_name] = params[:name]
-      session[:cust_address] = params[:address]
-      session[:cust_phone_number] = params[:phone_number]
-      session[:cust_email] = params[:email]
-      session[:cust_city] = params[:city]
-      session[:cust_province] = params[:province]
-      session[:cust_postal_code] = params[:postal_code]
+      session[:c_name] = params[:name]
+      session[:c_address] = params[:address]
+      session[:c_phone_number] = params[:phone_number]
+      session[:c_email] = user_signed_in? ? current_user.email : params[:email]
+      session[:c_city] = params[:city]
+      session[:c_province] = params[:province]
+      session[:c_postal_code] = params[:postal_code]
 
       redirect_to payment_products_path
     else
@@ -150,7 +171,7 @@ class ProductsController < ApplicationController
     tax_rates = []
     total_tax_rate = 0
     @total = 0
-    @province = Province.find(session[:cust_province].to_i)
+    @province = Province.find(session[:c_province].to_i)
     tax_rates << @province.pst if @province.pst != 0
     tax_rates << @province.gst if @province.gst != 0
     tax_rates << @province.hst if @province.hst != 0
@@ -169,29 +190,38 @@ class ProductsController < ApplicationController
 
   def process_payment
     # This will add the order to the orders table and customer to the customer table
-    # TODO: ADD PAYMENT VALIDATIONS
-    order_num = Faker::Number.unique.number(digits: 5)
+    if params[:card_type] == "visa" || params[:card_type == "mastercard"]
+      if params[:card_number] != "" && params[:security_code] != "" && params[:expiry] != ""
+        order_num = Faker::Number.unique.number(digits: 5)
 
-    customer = Customer.find_or_create_by(name:          session[:cust_name].upcase,
-                                          address:       session[:cust_address].upcase,
-                                          postal_code:   session[:cust_postal_code].upcase,
-                                          phone_number:  session[:cust_phone_number].to_i,
-                                          email_address: session[:cust_email].upcase,
-                                          city:          session[:cust_city].upcase,
-                                          province:      Province.find(session[:cust_province].to_i))
-    order = Order.create(order_number: order_num, order_date: DateTime.now, note: nil, total: session[:total], customer: customer)
-    session[:cart_with_options].each do |cart_product|
-      product = Product.find(cart_product["id"])
-      OrderProduct.create(quantity:          cart_product["quantity"].to_i,
-                          color:             Color.find(cart_product["p_color_id"]).name,
-                          size:              Size.find(cart_product["p_size_id"]).code,
-                          price_per_product: product.price,
-                          product:           product,
-                          order:             order)
+        customer = Customer.find_or_create_by(name:          session[:c_name].upcase,
+                                              address:       session[:c_address].upcase,
+                                              postal_code:   session[:c_postal_code].upcase,
+                                              phone_number:  session[:c_phone_number].to_i,
+                                              email_address: session[:c_email].upcase,
+                                              city:          session[:c_city].upcase,
+                                              province:      Province.find(session[:c_province].to_i))
+        order = Order.create(order_number: order_num, order_date: DateTime.now, note: nil, total: session[:total], customer: customer)
+        session[:cart_with_options].each do |cart_product|
+          product = Product.find(cart_product["id"])
+          OrderProduct.create(quantity:          cart_product["quantity"].to_i,
+                              color:             Color.find(cart_product["p_color_id"]).name,
+                              size:              Size.find(cart_product["p_size_id"]).code,
+                              price_per_product: product.price,
+                              product:           product,
+                              order:             order)
+        end
+
+        flash[:info] = "Thanks for your order!"
+        session[:cart_with_options] = []
+        redirect_to root_path
+      else
+        flash[:danger] = "Don't forget to fill everything out, please try again!"
+        redirect_to request.referer
+      end
+    else
+      flash[:danger] = "Don't forget to choose a card type!"
+      redirect_to request.referer
     end
-
-    flash[:info] = "Thanks for your order!"
-    session[:cart_with_options] = []
-    redirect_to root_path
   end
 end

@@ -18,6 +18,11 @@
 <br>
 <p class="title p-0 m-0 is-size-6">Your total is: <%= number_to_currency(@total) %></p>
 <hr>
+<% flash.each do |type, msg| %>
+  <div class="notification is-<%= type %>">
+    <%= msg %>
+  </div>
+<% end %>
 <%= form_with(url: process_payment_path, local: true,  method: "post", id: "payment-form") do %>
   <div class="field is-horizontal is-flex is-flex-direction-row is-align-items-center">
     <p class="description mr-3">Choose a Card Type: </p>

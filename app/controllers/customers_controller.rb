@@ -2,12 +2,13 @@ class CustomersController < ApplicationController
   def create
     customer = Customer.find { |i| i.email_address == current_user.email.upcase }
     unless customer.nil?
-      session[:cust_name] = customer.name
-      session[:cust_address] = customer.address
-      session[:cust_phone_number] = customer.phone_number
-      session[:cust_city] = customer.city
-      session[:cust_province] = customer.province
-      session[:cust_postal_code] = customer.postal_code
+      session[:c_name] = customer.name
+      session[:c_address] = customer.address
+      session[:c_phone_number] = customer.phone_number
+      session[:c_city] = customer.city
+      session[:c_province] = customer.province
+      session[:c_postal_code] = customer.postal_code
+      session[:c_email] = current_user.email
     end
   end
 
